@@ -16,6 +16,7 @@ class ProductManagerTest {
     Product second = new Book(2, "Fahrenheit 451", 600, "Ray Bradbury");
     Product third = new Book(3, "War and Peace", 700, "Tolstoy");
     Product fourth = new Smartphone(4, "iPhone XR", 700, "Apple");
+    Product fifth = new Smartphone(5, "iPhone 11", 900, "Apple");
 
     public void setUpProductList() {
         manager.add(first);
@@ -68,5 +69,29 @@ class ProductManagerTest {
         assertArrayEquals(expected, actual);
 
     }
+
+    @Test
+    void addProduct() {
+        manager.add(first);
+        assertArrayEquals(new Product[]{first}, repository.getAll());
+
+    }
+
+    @Test
+    void searchAllItemsFromOneManufacturer() {
+        setUpProductList();
+        Product[] expected = manager.searchBy("Apple");
+        Product[] actual = new Product[]{fourth, fifth};
+
+    }
+
+    @Test
+    void searchNonExistentProduct() {
+        setUpProductList();
+        Product[] expected = manager.searchBy("Shantaram");
+        Product[] actual = new Product[]{};
+        assertArrayEquals(expected, actual);
+    }
+
 
 }
